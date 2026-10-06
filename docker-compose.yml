@@ -1,0 +1,16 @@
+services:
+  research:
+    build: .
+    volumes:
+      - ./data:/app/data
+      - ./results:/app/results
+    command: python experiments/run_all.py --outdir results
+  # Optional: jupyter for interactive inspection (no API key needed)
+  notebook:
+    build: .
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./:/app
+    command: jupyter notebook --ip=0.0.0.0 --port=8888 --no-browser --allow-root --NotebookApp.token=''
+    profiles: ["notebook"]

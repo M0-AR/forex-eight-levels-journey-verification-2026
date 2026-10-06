@@ -1,0 +1,21 @@
+# Benchmark summary (real Yahoo EURUSD=X daily)
+
+Data: Yahoo EURUSD=X daily rows=5928 2003-12-01..2026-10-06 synthetic=False
+
+EXP01a: 0.5 lots on $200 -> $500 loss on 100 pips (250% of account), ruined=True, margin-call at 40.0 pips, ~275.0:1
+
+EXP01b: NFP-proxy Friday range 105.3 vs normal 89.3 pips (x1.179), p=0.001724, max NFP-day 268.9 pips
+
+EXP01c: 60-day ruin {'5': {'ruin_prob_60d': 0.0, 'median_terminal': 0.973}, '10': {'ruin_prob_60d': 0.0, 'median_terminal': 0.901}, '30': {'ruin_prob_60d': 0.127, 'median_terminal': 0.363}, '100': {'ruin_prob_60d': 0.9941, 'median_terminal': 0.0}, '250': {'ruin_prob_60d': 1.0, 'median_terminal': 0.0}}
+
+EXP02 rule-only: {'n_trades': 175, 'n_gut_injected': 0, 'win_rate': 0.3143, 'expectancy_R': -0.272, 'profit_factor': 0.601, 'final_equity_growth': 0.6144, 'sharpe_daily': -0.662, 'sortino_daily': -1.15, 'calmar_daily': -0.047, 'max_drawdown_pct': -43.78, 'sqn': -3.289, 'p_value': 0.0012166664918362637, 'monthly_mean_pct': -0.171, 'monthly_std_pct': 0.966, 'monthly_win_rate': 0.147}
+
+EXP02 +gut: {'n_trades': 205, 'n_gut_injected': 30, 'win_rate': 0.3317, 'expectancy_R': -0.2634, 'profit_factor': 0.6, 'final_equity_growth': 0.5756, 'sharpe_daily': -0.662, 'sortino_daily': -1.15, 'calmar_daily': -0.047, 'max_drawdown_pct': -43.78, 'sqn': -3.534, 'p_value': 0.0005057996332665562, 'monthly_mean_pct': -0.171, 'monthly_std_pct': 0.966, 'monthly_win_rate': 0.147}
+
+EXP02 theory 56%/1.5R: {'video_claim': {'win_rate': 0.56, 'rr': 1.5}, 'expectancy_R': 0.4, 'per_trade_pct_at_1pct_risk': 0.4, 'per_month_11_trades_pct': 4.4}
+
+EXP03: {'scalper_500trades': {'per_trade_pips': 1.3, 'per_trade_R': 0.13, 'trades_per_year': 500, 'annual_R_drag': 65.0, 'annual_pct_drag_at_1pct_risk': 65.0}, 'daytrader_250trades': {'per_trade_pips': 1.2, 'per_trade_R': 0.04, 'trades_per_year': 250, 'annual_R_drag': 10.0, 'annual_pct_drag_at_1pct_risk': 10.0}, 'swing_60trades': {'per_trade_pips': 2.9, 'per_trade_R': 0.0362, 'trades_per_year': 60, 'annual_R_drag': 2.17, 'annual_pct_drag_at_1pct_risk': 2.17}, 'level3_disciplined_132trades': {'per_trade_pips': 1.2, 'per_trade_R': 0.03, 'trades_per_year': 132, 'annual_R_drag': 3.96, 'annual_pct_drag_at_1pct_risk': 3.96}}
+
+EXP04: {'total_turnover_usd_bn_per_day': 9510.2, 'spot_bn': 2951.8, 'outright_forwards_bn': 1747.3, 'fx_swaps_bn': 4015.3, 'retail_driven_bn': 242.0, 'prime_brokered_bn': 2163.1, 'inter_dealer_share_pct': 46.7, 'other_financial_share_pct': 48.7, 'electronic_share_pct': 59.0, 'internalisation_note': '>80% in major hubs (BIS QR Dec 2025)', 'uk_share_pct': 49.9, 'source': 'BIS Triennial Central Bank Survey Apr 2025 (pub Sep/Dec 2025)', 'retail_share_pct': 2.54, 'video_3T_claim': 'UNDERSTATES total market (~$9.6T); plausible as top-5 LP share, not whole market', 'colocation_claim': 'CONFIRMED directionally: PTF/electronic/internalisation data support latency competition', 'aggregate_counterparty_claim': 'CONFIRMED mechanism: spread+swap+internalisation = negative-sum retail game before skill'}
+
+EXP05_hidden: {'H1_nfp_absret_mean': 0.005808, 'H1_normal_absret_mean': 0.004268, 'H1_expansion_ratio': 1.361, 'H1_welch_p': 0.0002668665001827506, 'H1_verdict': 'CONFIRMED: NFP days move ~36% more close-to-close; daily understates intraday spike', 'H2_dow_mean_ret': {0: -0.000198, 1: 0.000227, 2: 0.000214, 3: -0.000187, 4: 0.000198, 6: -0.000123}, 'H2_verdict': 'FALSIFIED weekday-direction edge: all |means| < 2.3bp — no tradable drift', 'H3_range_median_pips': 75.0, 'H3_range_p90': 156.0, 'H3_range_p99': 287.1, 'H3_verdict': "NFP max 268.9 pips sits at ~p99 — video's 100-pip shock is tail but not outlier", 'H4_atr_median_early_pips': 104.2, 'H4_atr_median_recent_pips': 79.0, 'H4_verdict': 'Volatility regime decayed ~24%: edges estimated on 2010s ATR do not transfer 1:1 to 2020s'}
