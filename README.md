@@ -9,7 +9,7 @@
 [![Data: live, no keys](https://img.shields.io/badge/data-Yahoo%20EURUSD=X%20live-brightgreen.svg)](./src/fetch_data.py)
 [![Pages ready](https://img.shields.io/badge/GitHub%20Pages-ready-violet.svg)](./docs/)
 
-**🌐 Prefer a website? This repo ships one: open [`preview.html`](./preview.html) — or publish it in 1 minute ([instructions](#-view-as-a-website-github-pages)).**
+**🌐 Prefer a website? Read it online: [entry](https://m0-ar.github.io/forex-eight-levels-journey-verification-2026/) · [preview.html](https://m0-ar.github.io/forex-eight-levels-journey-verification-2026/preview.html) · [docs/preview.html](https://m0-ar.github.io/forex-eight-levels-journey-verification-2026/docs/preview.html) — ([how publishing works](#-view-as-a-website-github-pages)). Local copies: [`preview.html`](./preview.html), [`docs/`](./docs/).**
 
 ![Website hero screenshot](./assets/screenshot-hero.png)
 
@@ -288,15 +288,30 @@ flowchart TD
 
 ## 🌍 View as a website (GitHub Pages)
 
-This repo **is** a website. Two identical files: [`preview.html`](./preview.html) (preview at the root) and [`docs/index.html`](./docs/index.html) (the Pages copy, with its own `docs/assets/`).
+Live site (all three resolve by design): **[entry](https://m0-ar.github.io/forex-eight-levels-journey-verification-2026/)** · **[preview.html](https://m0-ar.github.io/forex-eight-levels-journey-verification-2026/preview.html)** · **[docs/preview.html](https://m0-ar.github.io/forex-eight-levels-journey-verification-2026/docs/preview.html)**.
 
-**Publish in 1 minute (branch method, 2026 UI):**
-1. Push to GitHub.
-2. Open **Settings → Pages → Build and deployment → Deploy from a branch**.
-3. Choose your branch + folder **`/docs`** → Save.
-4. Open `https://<you>.github.io/<repo>/` — hero, demo, charts, verdicts, FAQ.
+**Setup (recommended):** Settings → Pages → Build and deployment → **Deploy from a branch** → branch `main`, folder **`/docs`** → Save. Wait 1–2 min for the "pages build and deployment" run.
 
-> Keep the two files in sync: edit `preview.html`, then `cp preview.html docs/index.html`.
+**Why three URLs?** Pages serves paths *under the chosen source*: source `/docs` maps repo `docs/x.html` → `/x.html`; source `/` (root) maps repo `docs/x.html` → `/docs/x.html`. A green deployment only proves *something* built — never that *your path* exists under the configured source. So this repo keeps mirrors: `preview.html` + redirect `index.html` at root, `preview.html` + `index.html` under `docs/`, `.nojekyll` in both. All asset paths are relative (`assets/…`, each folder carries its own copy).
+
+**Self-check (no login, 10 seconds):**
+
+```bash
+BASE="https://m0-ar.github.io/forex-eight-levels-journey-verification-2026"
+for p in "" "preview.html" "docs/preview.html"; do
+  printf "%s -> " "/$p"; curl -s -o /dev/null -w "%{http_code}\n" "$BASE/$p"
+done
+# expect 200 / 200 / 200
+```
+
+| `/` | `/preview.html` | `/docs/preview.html` | Meaning |
+|---|---|---|---|
+| 200 | 200 | 200 | ✅ all mirrors resolve |
+| 200 | 200 | 404 | source = `/docs`, root mirror missing |
+| 200 | 404 | 200 | source = `/` (root), canonical only under `/docs` |
+| 404 | 404 | 404 | Pages off / still building / wrong branch |
+
+> Keep `preview.html`, `docs/index.html` and `docs/preview.html` in sync: edit `preview.html`, then `cp preview.html docs/index.html && cp preview.html docs/preview.html`.
 
 ---
 
@@ -320,8 +335,11 @@ This repo **is** a website. Two identical files: [`preview.html`](./preview.html
 
 ```
 ├── README.md                  # you are here (full paper + guide)
-├── preview.html               # website (root preview)
-├── docs/index.html            # website (Pages copy) + docs/assets/
+├── preview.html               # website mirror (root; uses ./assets/)
+├── index.html                 # root entry: redirects to preview.html + fallback links
+├── .nojekyll                  # root: keep Pages static (mirrored in docs/)
+├── docs/index.html            # website entry for source /docs (uses docs/assets/)
+├── docs/preview.html          # website canonical copy (identical page)
 ├── assets/                    # fig_*.png + demo.gif + screenshot-hero.png
 ├── src/                       # fetch_data · metrics · leverage_ruin · level3_backtest
 │                              # costs_drag · microstructure · hidden_patterns

@@ -135,9 +135,18 @@ python3 scripts/make_figures.py && python3 -m pytest tests/ -q</pre>
 <tr><td>05</td><td>Hidden patterns?</td><td>36% news premium; no weekday drift; volatility −24%</td></tr></table></details>
 </section>
 
-<section><h2 class="sec">🌍 View as a website (GitHub Pages, 1 minute)</h2>
-<ol><li>Push this repo to GitHub.</li><li>Open <b>Settings → Pages → Build and deployment → Deploy from a branch</b>, select your branch and folder <b><code>/docs</code></b>, Save.</li><li>Open <b><code>https://&lt;you&gt;.github.io/&lt;repo&gt;/</code></b> — this page, with all charts and the demo, is what visitors see.</li></ol>
-<p class="lead">This file (<code>preview.html</code>) and <code>docs/index.html</code> are identical — keep them in sync after edits.</p></section>
+<section><h2 class="sec">🌍 View as a website (GitHub Pages)</h2>
+<ol><li>Push this repo to GitHub (done).</li><li>Open <b>Settings → Pages → Build and deployment → Deploy from a branch</b>, select branch <b><code>main</code></b> and folder <b><code>/docs</code></b> (recommended), Save. Wait 1–2 min for the "pages build and deployment" run.</li><li>Open any of these — all three resolve by design:
+<b><code>https://m0-ar.github.io/forex-eight-levels-journey-verification-2026/</code></b> (entry → preview) ·
+<b><code>…/preview.html</code></b> (root mirror) ·
+<b><code>…/docs/preview.html</code></b> (canonical).</li></ol>
+<p class="lead">Why three URLs? Pages serves paths <i>under the chosen source</i>: source <code>/docs</code> maps repo <code>docs/x.html</code> → <code>/x.html</code>; source <code>/</code> (root) maps repo <code>docs/x.html</code> → <code>/docs/x.html</code>. Mirrors (<code>preview.html</code> + <code>index.html</code> at root, <code>preview.html</code> + <code>index.html</code> under <code>docs/</code>, <code>.nojekyll</code> in both) make every setting resolve. Self-check:</p>
+<pre>BASE="https://m0-ar.github.io/forex-eight-levels-journey-verification-2026"
+for p in "" "preview.html" "docs/preview.html"; do
+  printf "%s -&gt; " "/$p"; curl -s -o /dev/null -w "%{http_code}\n" "$BASE/$p"
+done
+# expect 200 / 200 / 200</pre>
+<p class="lead">Files <code>preview.html</code>, <code>docs/index.html</code> and <code>docs/preview.html</code> are identical page copies (each uses its folder-local <code>assets/</code>) — keep them in sync after edits.</p></section>
 
 <section><h2 class="sec">❓ FAQ</h2>
 <details><summary>Can I get rich following the 8 levels?</summary><p>Data says: probably not. ~71% of retail accounts lose yearly. The levels describe a real but <i>rare</i> path. Use this repo to test any strategy before risking money.</p></details>
